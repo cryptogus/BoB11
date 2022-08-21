@@ -22,6 +22,7 @@ int mrPrimalityTest(BIGNUM *n, uint32_t k){ //n 판정하려는 수, k 테스트
     
     BN_CTX *ctx = BN_CTX_new();
     BIGNUM *A = BN_new();
+    BIGNUM *A2 = BN_new();
     BIGNUM *r = BN_new();
     BIGNUM *range = BN_new();
     BIGNUM *q = BN_new();
@@ -42,20 +43,23 @@ int mrPrimalityTest(BIGNUM *n, uint32_t k){ //n 판정하려는 수, k 테스트
     BN_dec2bn(&compare3 , "1");
     BIGNUM *compare4 = BN_new();
     BN_dec2bn(&compare4 , "2");
-    
+    BN_sub(A2, n, compare);
     //2^l과 q 구하기, n은 이미 홀수로 뽑았기에 if문에 홀수일 (나머지가 1일 조건) 조건은 지움
     while(true){
         
         //printf("test...\n");
         BN_exp(divisor, A, l, ctx);
-        BN_div(q, r, n, divisor, ctx);
-        if(BN_cmp(n,divisor) == -1){
+        BN_div(q, r, A2, divisor, ctx);
+        BN_add(l, l, compare);
+        if(BN_is_zero(r)&&BN_is_odd(q)){
+            BN_sub(l, l, compare);
             break;
         }
-        BN_add(l, l, compare);
-        //printf("%s\n",BN_bn2dec(l));
+       
 
     }
+    //printf("l = %s\n",BN_bn2dec(l));
+    //printf("q = %s\n",BN_bn2dec(q));
     //printf("%s\n",BN_bn2dec(compare));
     //compare = 1
     BIGNUM *RandNum = BN_new();
@@ -76,42 +80,46 @@ int mrPrimalityTest(BIGNUM *n, uint32_t k){ //n 판정하려는 수, k 테스트
             }
             break;
         }
-
-        BN_gcd(A, RandNum, n, ctx );
-        //printf("%s\n",BN_bn2dec(A));
-        //오류 후보 2 if문
-        if (BN_is_one(A) == 0){
-            return false; // Composite number
-        }
-        BN_mod_exp(RandNum, RandNum, q, n, ctx);
+        //printf("%s\n",BN_bn2dec(RandNum)); 
+        //printf("ttttttttttt\n");
         
+        BN_mod_exp(RandNum, RandNum, q, n, ctx);
+       
         if (BN_is_one(RandNum))
             continue;
 
         BN_copy(compare, l);
+        //printf("%s\n",BN_bn2dec(n));
         //printf("%s\n",BN_bn2dec(l));
         BIGNUM *compare5 = BN_new();
         BN_dec2bn(&compare5, "1");
-        BN_sub(compare5, n, compare5);
-        //printf("%s\n",BN_bn2dec(compare5));
+        BN_sub(compare2, n, compare5);
+        
+       // printf("%s\n",BN_bn2dec(compare5));
         while(true){
             //printf("%s\n",BN_bn2dec(compare5));
             //printf("test3\n");
-            //BN_mod_exp(result ,RandNum, compare, n, ctx);
-            BN_sub(compare2, compare, compare3);
-            //printf("%s\n",BN_bn2dec(compare2));
-            if(!BN_cmp(RandNum, compare5)){
-                continue;
+            BN_mod(result ,RandNum, n, ctx);
+            //printf("RN = %s\n",BN_bn2dec(RandNum));
+            //printf("result = %s\n",BN_bn2dec(result));
+
+            BN_sub(compare, compare, compare3);
+            //printf("%s\n",BN_bn2dec(compare));
+        
+            if(BN_cmp(result, compare2) == 0){
+                //printf("dd\n");
+                break;
             }
-            if(BN_is_one(compare2)){
+            if(BN_is_zero(compare)){
+                //printf("dd\n");
                 break;
             }
             BN_mod_exp(RandNum, RandNum, compare4 ,n, ctx); 
         }
-        if(!BN_cmp(RandNum,compare5)){
+        if(BN_cmp(result, compare2) == 0){
             continue;
         }
-       
+        //printf("실패\n");
         return false; //composite number
         
 
@@ -269,40 +277,43 @@ int BOB11_RSA_KeyGen(BOB11_RSA *b11rsa, int nBits){
     
     BIGNUM *p = BN_new();
     BIGNUM *q = BN_new();
-    //BN_hex2bn(&p,"17" );
-    //BN_hex2bn(&q,"13");
-    //printf("p = %s\n",BN_bn2hex(p));
-    //printf("q = %s\n",BN_bn2hex(q));
-    // BN_hex2bn(&p,"C485F491D12EA7E6FEB95794E9FE0A819168AAC9D545C9E2AE0C561622F265FEB965754C875E049B19F3F945F2574D57FA6A2FC0A0B99A2328F107DD16ADA2A" );
-    // BN_hex2bn(&q,"F9A91C5F20FBBCCC4114FEBABFE9D6806A52AECDF5C9BAC9E72A07B0AE162B4540C62C52DF8A8181ABCC1A9E982DEB84DE500B27E902CD8FDED6B545C067CE4F");
+    //BN_dec2bn(&p,"233" );
+    //BN_dec2bn(&q,"103");
+    //printf("p = %s\n",BN_bn2dec(p));
+    //printf("q = %s\n",BN_bn2dec(q));
+    
     //두 서로다른 n/2 비트 소수 생성
-    //BIGNUM *p = BN_new();
-    //BIGNUM *q = BN_new();
+    int t1,t2;
     while(true){
         //두 랜덤한 홀수 뽑기
-        BN_priv_rand(p, PrimeBits, BN_RAND_TOP_ONE, BN_RAND_BOTTOM_ODD);
-        BN_priv_rand(q, PrimeBits, BN_RAND_TOP_ONE, BN_RAND_BOTTOM_ODD);
-        if(mrPrimalityTest(p,30) && mrPrimalityTest(q, 30) ){ //30 회 테스트
-            
+        BN_priv_rand(p, PrimeBits, BN_RAND_TOP_ANY, BN_RAND_BOTTOM_ODD);
+        BN_priv_rand(q, PrimeBits, BN_RAND_TOP_ANY, BN_RAND_BOTTOM_ODD);
+        t1 = mrPrimalityTest(p,10);
+        t2 = mrPrimalityTest(q,10);
+
+        if(t1 == 1 && t2 == 1 ){ //10 회 테스트
+            printf("소수판정 통과\n\n");
             break;
             
         }
+        
     }
     
     
     BIGNUM *N = BN_new();
-
+    
     BN_mul(N, p, q, ctx);
     BN_copy(b11rsa->n, N);
     
     //오일러 파이함수 생성
     BIGNUM *phi = BN_new();
     BIGNUM *p1 = BN_new();
+    
     BIGNUM *q1= BN_new();
     BIGNUM *c = BN_new();
     BN_dec2bn(&c , "1");
-    // printf("c = %s\n",BN_bn2hex(c));
-    // printf("N = %s\n",BN_bn2hex(N));
+    //printf("c = %s\n",BN_bn2hex(c));
+    //printf("N = %s\n",BN_bn2dec(N));
     BN_sub(p1, p, c);
     //printf("p1 = %s\n",BN_bn2dec(p1));
     
@@ -310,23 +321,26 @@ int BOB11_RSA_KeyGen(BOB11_RSA *b11rsa, int nBits){
     //printf("q1 = %s\n",BN_bn2dec(q1));
     BN_mul(phi, p1, q1, ctx);
     //printf("phi = %s\n",BN_bn2dec(phi));
-    //공개키 선택 b11rsa->e 단 gcd(e, 오일러파이함수) = 1  int BN_gcd(BIGNUM *r, BIGNUM *a, BIGNUM *b, BN_CTX *ctx);
-    
-    while(true){
-        BN_rand_range(b11rsa->e, phi);
-        BN_gcd(p1, b11rsa->e, phi, ctx);
-        //printf("p1 = %s\n",BN_bn2hex(p1));
-        if(BN_is_one(p1) == 0)
-            continue;
-        break;
-    }
-    
+    //공개키 랜덤선택 b11rsa->e 단 gcd(e, 오일러파이함수) = 1  int BN_gcd(BIGNUM *r, BIGNUM *a, BIGNUM *b, BN_CTX *ctx);
+    // while(true){
+    //     BN_rand_range(b11rsa->e, phi);
+    //     //BN_dec2bn(&b11rsa->e,"7");
+    //     BN_gcd(p1, b11rsa->e, phi, ctx);
+    //     //printf("p1 = %s\n",BN_bn2hex(p1));
+    //     if(BN_is_one(p1) == 0)
+    //         continue;
+    //     break;
+    // }
+    //공개키 값 65533 -> 소수
+    BN_dec2bn(&b11rsa->e,"65533");
+
     //printf("e = %s\n",BN_bn2dec(b11rsa->e));
     //비밀키 d 생성
     XEuclid( b11rsa->d, q1, b11rsa->e ,phi);
     BN_mod_exp(b11rsa->d, b11rsa->d, c, phi, ctx);
     //printf("q1 = %s\n",BN_bn2hex(q1));
     //printf("d = %s\n",BN_bn2hex(b11rsa->d));
+    BN_free(c);
 }
 
 int BOB11_RSA_Enc(BIGNUM *c, BIGNUM *m, BOB11_RSA *b11rsa){
