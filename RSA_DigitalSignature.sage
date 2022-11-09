@@ -28,9 +28,9 @@ s = pow(m1,d,n)
 
 #서명 검증
 mprime = pow(s,e,n)
-bytes.fromhex(hex(mprime)[2:]).decode('utf-8')
+j = bytes.fromhex(hex(mprime)[2:]).decode('utf-8')
 print(mprime == m1)
-
+print("복호문 = ",j)
 """
 Bob의 RSA 공개키 (e,n)은 다음과 같은 성분을 가진다.
 e=65537
