@@ -16,8 +16,10 @@ In ubuntu linux
  `sudo apt install sagemath`   
  실행시 `sage filename.sage` 해주면 알아서 python파일로도 변환시켜줌.
  
-In windows   
- https://www.sagemath.org/download-source.html or wsl 이용   
+In windows (without wsl)   
+ https://www.sagemath.org/download-source.html -> Download Windows binaries ->    
+ https://github.com/sagemath/sage-windows/releases -> SageMath-9.3-Installer-v0.6.3.exe -> Download!   
+ 
  사용법은 linux와 비슷하다. windows는 설치된 sage 프로그램을 클릭하면 terminal이 실행 됨.   
  
 ### ARIA test vector
