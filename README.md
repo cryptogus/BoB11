@@ -7,6 +7,7 @@ openssl 라이브러리 사용법 (ubuntu)
 gcc 옵션 -lcrypto   
 
 ### sagemath 사용법 - python 기반의 오픈소스
+Tip. sage는 새로운 프로그래밍 언어가 아니라 python 문법에 수학적으로 다룰 수 있는 함수 및 기능이 추가된 것이라고 보면 된다.   
 
 1. 사이트에서 돌려보기 - https://sagecell.sagemath.org/
 2. sagemath 설치 - https://doc.sagemath.org/html/en/installation/index.html
