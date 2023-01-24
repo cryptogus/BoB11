@@ -12,8 +12,8 @@ gcc 옵션 -lcrypto
 2. sagemath 설치 - https://doc.sagemath.org/html/en/installation/index.html
 
 In ubuntu linux   
- `sudo apt install python3`
- `sudo apt install sagemath`
+ `sudo apt install python3`   
+ `sudo apt install sagemath`   
  실행시 `sage filename.sage` 해주면 알아서 python파일로도 변환시켜줌.
  
 In windows   
