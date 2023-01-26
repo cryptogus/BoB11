@@ -59,7 +59,7 @@ void galois_operation(uint8_t *input1, uint8_t *input2, uint8_t *output)
             {
                 input1_1[k + 1] |= cbit[k];
             }
-            input1_1[0] ^= 0b11100001;
+            input1_1[0] ^= 0b10000111;
         }
         memset(cbit, 0, 16);
     }
