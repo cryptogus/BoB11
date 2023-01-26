@@ -4,10 +4,10 @@
 /****
  * =======build command on ubuntu linux======
  *
- *        gcc -o aria_128_gcm aria_128_gcm_test.c -lcrypt -g
+ *        gcc -o aria_128_gcm aria_128_gcm_test.c -lcrypto -g
  */
 
-int main()
+int main(int argv, char *argc[])
 {
     //https://www.openssl.org/docs/man1.1.1/man3/EVP_aria_192_ecb.html
     //https://www.openssl.org/docs/man1.1.1/man3/EVP_EncryptInit.html
