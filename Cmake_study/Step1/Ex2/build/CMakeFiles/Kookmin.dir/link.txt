@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/Kookmin.dir/Exercise2.cxx.o  -o Kookmin 

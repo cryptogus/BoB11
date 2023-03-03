@@ -49,6 +49,7 @@ set_property(TARGET tgt PROPERTY CXX_STANDARD 11)
 
 이 특성은 대상을 작성할 때 설정된 경우 CMAKE_CXX_STANDARD 변수 의 값으로 초기화됩니다 .
 ]]
+# https://cmake.org/cmake/help/latest/manual/cmake-compile-features.7.html#manual:cmake-compile-features(7)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 

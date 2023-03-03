@@ -1,3 +1,0 @@
-/home/pqc/BoB11/Cmake_study/Step1/Ex2/build/CMakeFiles/rebuild_cache.dir
-/home/pqc/BoB11/Cmake_study/Step1/Ex2/build/CMakeFiles/edit_cache.dir
-/home/pqc/BoB11/Cmake_study/Step1/Ex2/build/CMakeFiles/Kookmin.dir
