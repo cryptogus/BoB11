@@ -13,6 +13,12 @@ CMake suite maintained and supported by Kitware (kitware.com/cmake).
 ```
 
 ## CMake Tutorial
-https://cmake.org/cmake/help/latest/guide/tutorial/index.html\n
+https://cmake.org/cmake/help/latest/guide/tutorial/index.html  
 https://junstar92.tistory.com/204  
 
+## CMake build & execute
+CMakeLists.txt가 있는 디렉토리로 이동하여 다음 명령어를 실행한다.
+```bash
+$ cmake -S ./ -B build
+$ cmake --build build -j
+```
