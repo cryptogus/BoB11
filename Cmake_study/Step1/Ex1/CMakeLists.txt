@@ -4,6 +4,6 @@ project(Exercise1 C)
 # CXX 와 C++은 같은거다. 다만 어떤 환경에서는 +를 표현하는데 무리가 있기에 X로 대체한 것 
 
 add_executable(
-    Slayers_BoxeR
+    Slayers_BoxeR # 실행파일 이름 
     Exercise1.c
 )

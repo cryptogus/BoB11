@@ -16,9 +16,12 @@ CMake suite maintained and supported by Kitware (kitware.com/cmake).
 https://cmake.org/cmake/help/latest/guide/tutorial/index.html  
 https://junstar92.tistory.com/204  
 
-## CMake build & execute
+## CMake build
 CMakeLists.txt가 있는 디렉토리로 이동하여 다음 명령어를 실행한다.
 ```bash
 $ cmake -S ./ -B build
 $ cmake --build build -j
 ```
+이 두 명령어는은 다음과 같다.\
+Run cmake to configure the project and generate a native build system\
+Then call that build system to actually compile/link the project
