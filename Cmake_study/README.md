@@ -14,7 +14,7 @@ CMake suite maintained and supported by Kitware (kitware.com/cmake).
 
 ## CMake Tutorial
 https://cmake.org/cmake/help/latest/guide/tutorial/index.html  
-https://github.com/Kitware/CMake/tree/master/Help/guide/tutorial
+https://github.com/Kitware/CMake/tree/master/Help/guide/tutorial  
 https://junstar92.tistory.com/204  
 
 ## CMake build
