@@ -19,7 +19,7 @@ Tip. sage는 새로운 프로그래밍 언어가 아니라 python 문법에 수�
 $ sudo apt install python3
 $ sudo apt install sagemath
 ```  
- 실행시 `$ sage <filename>.sage` 해주면 알아서 python파일로도 변환시켜줌. <filename> 대신 파일 이름을 넣어야함!
+ 실행시 `$ sage <filename>.sage` 해주면 알아서 python파일로도 변환시켜줌. `<filename>` 대신 실행할 파이썬 파일 이름을 넣어야함!
  
 In windows (without wsl)   
  https://www.sagemath.org/download-source.html -> Download Windows binaries ->    
